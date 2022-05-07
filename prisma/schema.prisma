@@ -1,0 +1,18 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Url {
+  id          Int      @id @default(autoincrement())
+  created     DateTime @default(now())
+  tracked     Boolean  @default(false)
+  redirect_id String   @unique
+  long_url    String   
+}
+
+
