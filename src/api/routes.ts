@@ -32,26 +32,4 @@ module.exports = (app: Application, prisma: PrismaClient): void => {
         });
       });
   });
-
-  app.get('/:id', async (req, res) => {
-    const url = await prisma.url.findUnique({
-      where: {
-        redirect_id: req.params.id,
-      }
-    });
-
-    if (url == null) {
-      res.json({
-        status: "error",
-        message: "The requested URL does not exist."
-      }).status(500);
-      return;
-    }
-    let redirectUrl: string = url.long_url;
-    if (redirectUrl.slice(0, 8) != "https://") {
-      redirectUrl = 'https://' + redirectUrl
-    } 
-
-    res.redirect(redirectUrl);
-  });
 };
