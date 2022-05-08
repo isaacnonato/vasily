@@ -13,6 +13,7 @@ model Url {
   tracked     Boolean  @default(false)
   redirect_id String   @unique
   long_url    String   
+  count       Int      @default(0)
 }
 
 

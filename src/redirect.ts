@@ -24,6 +24,14 @@ module.exports = (app: Application, prisma: PrismaClient) => {
     } 
 
     res.redirect(redirectUrl);
+    await prisma.url.update({
+      where: {
+        redirect_id: req.params.id 
+      },
+      data: {
+        count: url.count + 1,
+      },
+    });
   });
 }
 
