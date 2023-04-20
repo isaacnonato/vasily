@@ -1,7 +1,11 @@
-const fs = require('fs');
-console.log('a');
-console.log('b');
-
+import fs from 'fs';
 class DB {
-    
+  path: string = './';
+  data = fs.readFileSync(this.path).toString();
+
+  constructor() {
+    if (!fs.existsSync(this.path)) {
+      fs.writeFileSync(this.path, this.data);
+    }
+  }
 }
