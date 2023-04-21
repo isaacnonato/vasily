@@ -1,8 +1,8 @@
 import crypto from 'crypto';
 import fs from 'fs';
-import genid from '../utils/genid';
+import genid from '../utils/genid.ts';
 
-class Entry {
+export default class Entry {
   id: string;
   URI: string;
   createdAt: number;
@@ -33,10 +33,11 @@ class Entry {
   }
 
   serialize(): string {
-    return `${this.id};${this.URI};${this.hash};${this.createdAt}`;
+    return `${this.id};${this.URI};${this.hash};${this.createdAt}\n`;
   }
 
-  parse(data): Entry[] {
+  parse(): Entry[] {
+    const data = this.serialize();
     const content: string[] = data.split('/n');
     let parsedData: Entry[] = [];
 
