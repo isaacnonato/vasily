@@ -1,7 +1,6 @@
 import crypto from 'crypto';
 import fs from 'fs';
-import genid from '../utils/genid.ts';
-
+import { nanoid } from 'nanoid';
 export default class Entry {
   id: string;
   URI: string;
@@ -10,7 +9,7 @@ export default class Entry {
   hash?: string;
 
   constructor(
-    id = genid(),
+    id,
     URI,
     password,
     hash = password ? Entry.hash(password) : undefined,
@@ -36,9 +35,8 @@ export default class Entry {
     return `${this.id};${this.URI};${this.hash};${this.createdAt}\n`;
   }
 
-  parse(): Entry[] {
-    const data = this.serialize();
-    const content: string[] = data.split('/n');
+  static parse(data: string): Entry[] {
+    const content: string[] = data.split('\n');
     let parsedData: Entry[] = [];
 
     for (let index in content) {

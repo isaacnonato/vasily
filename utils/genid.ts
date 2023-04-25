@@ -1,5 +1,5 @@
-export default () => {
-  return crypto
+export const genid = () => {
+  return require('crypto')
     .getRandomValues(new Uint8Array(5))
     .reduce(
       (t, e) =>

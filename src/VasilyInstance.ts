@@ -1,6 +1,8 @@
 import { Application } from 'express';
 import DB from './DB.ts';
 import Entry from './Entry.ts';
+import { genid } from '../utils/genid.ts';
+import { nanoid } from 'nanoid';
 
 export default class VasilyInstance {
   express: Application;
@@ -8,9 +10,8 @@ export default class VasilyInstance {
     this.express = express;
 
     express.get('/', () => {
-      let entry = new Entry('id', 'uri', undefined, 'hash', 0);
-      storage.write(entry);
-      storage.write(new Entry('id2', 'uri2', undefined, 'hash2', 1));
+      storage.write(new Entry(nanoid(5), 'uri', undefined, 'h', 0));
+      storage.write(new Entry(nanoid(5), 'uri2', undefined, 'h', 0));
     });
   }
 
