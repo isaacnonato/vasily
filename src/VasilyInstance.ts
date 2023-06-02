@@ -6,18 +6,20 @@ import { nanoid } from 'nanoid';
 
 export default class VasilyInstance {
   express: Application;
-  constructor(express: Application, storage: DB = new DB()) {
+  storage: DB = new DB();
+  constructor(express: Application) {
     this.express = express;
 
     express.get('/', () => {
-      storage.write(new Entry(nanoid(5), 'uri', undefined, 'h', 0));
-      storage.write(new Entry(nanoid(5), 'uri2', undefined, 'h', 0));
+      this.storage.write(
+        new Entry(undefined, 'uri3', undefined, 'h', 0),
+        'yJRhm'
+      );
     });
   }
-
-  run(port: number = 4000, host: string = '127.0.0.1') {
+  run(port: number = 4001, host: string = '127.0.0.1') {
     this.express.listen(port, host, () => {
-      // console.log(`listening to ${host}:${port}`);
+      console.log(`listening to ${host}:${port}`);
     });
   }
 }

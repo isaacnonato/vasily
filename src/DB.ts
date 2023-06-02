@@ -1,4 +1,4 @@
-import fs, { read, readFile, readFileSync } from 'fs';
+import fs from 'fs';
 import Entry from './Entry.ts';
 import { nanoid } from 'nanoid';
 export default class DB {
@@ -7,27 +7,41 @@ export default class DB {
     ? fs.readFileSync(this.path).toString()
     : '';
 
-  write(entry: Entry): void {
-    if (this.findEntrybyId(entry.id)) {
-      console.log('error: entry already exists');
+  async write(entry: Entry, id: string = this.getId()): Promise<void> {
+    entry.id = id;
+    if (this.entryExists(entry.id)) {
+      console.log('entry with this id already exists.');
+      console.log(1);
       return;
     }
-
     const newData = entry.serialize();
-    fs.appendFileSync(this.path, newData, {});
-    this.data = fs.readFileSync(this.path).toString();
+    fs.appendFile(this.path, newData, (err) => console.error(err));
+    fs.readFile(this.path, (err, data) => {
+      if (err) console.error(err.message);
+      this.data = data.toString();
+    });
+  }
+
+  entryExists(id: string): boolean {
+    return this.findEntrybyId(id) ? true : false;
   }
 
   findEntrybyId(id: string): Entry {
-    console.log(this.data);
     let entries: Entry[] = Entry.parse(this.data);
     for (let index in entries) {
       if (entries[index].id === id) {
         return entries[index];
       }
     }
-    console.error('entry not found');
-    return;
+    return null;
+  }
+
+  private getId() {
+    let id = nanoid(5);
+    while (this.entryExists(id)) {
+      id = nanoid();
+    }
+    return id;
   }
 
   constructor() {
