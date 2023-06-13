@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 export default class Entry {
   id: string;
   URI: string;
-  createdAt: number;
+  createdAt: string;
   password?: string;
   hash?: string;
 
@@ -12,8 +12,8 @@ export default class Entry {
     id,
     URI,
     password,
-    hash = password ? Entry.hash(password) : undefined,
-    createdAt = Date.now()
+    createdAt = new Date().toLocaleString(),
+    hash = password ? Entry.hash(password) : undefined
   ) {
     this.id = id;
     this.password = password;
@@ -41,7 +41,7 @@ export default class Entry {
 
     for (let index in content) {
       const [id, URI, hash, createdAt] = content[index].split(';');
-      parsedData.push(new Entry(id, URI, undefined, hash, parseInt(createdAt)));
+      parsedData.push(new Entry(id, URI, undefined, createdAt, hash));
     }
     return parsedData;
   }

@@ -2,4 +2,5 @@ node_modules/
 what.md
 idea.md
 db
+.env
 .prettierrc
