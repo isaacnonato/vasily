@@ -17,7 +17,10 @@ export default class VasilyInstance {
       this.storage.write(entry);
     });
 
-    express.get('/:id', (req, res) => {});
+    express.get('/:id', (req, res) => {
+      const entry = this.storage.findEntrybyId(req.params.id);
+      res.redirect('http://' + entry.URI);
+    });
   }
   run(port: number = 4001, host: string = '127.0.0.1') {
     this.express.listen(port, host, () => {
