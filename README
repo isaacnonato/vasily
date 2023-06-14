@@ -1,0 +1,3 @@
+Vasily - Barebones URL Shortener
+
+This is a simple project made mostly for my personal use. In order to get it working, create a `.env` file with a `GLOBAL_PASSWORD` variable in order to define the password you're going to use.
