@@ -31,7 +31,7 @@ export default class DB {
   }
 
   entryExists(id: string): boolean {
-    return this.findEntrybyId(id) ? true : false;
+    return this.findEntrybyId(id)
   }
 
   findEntrybyId(id: string): Entry {
